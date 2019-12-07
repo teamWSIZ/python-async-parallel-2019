@@ -1,0 +1,36 @@
+/accounts/{nr}/get --> funds of this account
+/accounts/{nr}/add --> add funds etc
+/accounts/{nr}/draw --> draw funds etc
+/accounts/{nr}/transfer --> target, amount
+
+każdy z endpointów musi brać parametr "secret",
+który jest hasłem do konta
+
+@dataclass
+class Account:
+  account_no : int
+  secret : str
+  funds : int
+
+@dataclass
+class Response:
+  result: str
+
+# Klasa obsługująca wszystkie operacje bankowe
+class Lehman:
+  accounts: Dict[int, Account] = {}
+
+  authorize(account_no:int , pass:str) -> bool
+     # sprawdza czy istnieje konto, sprawdza poprawność hasła
+
+  get(account_no: int, pass: str) -> int
+
+  add(account_no: int, pass: str, amount: int) -> string (OK/FAILED)
+
+  draw(account_no: int, pass: str, amount: int) -> string (OK/FAILED)
+
+  # optional
+  transfer(source_id: int, target_id, pass: str, amount: int) -> string (OK/FAILED)
+
+
+
