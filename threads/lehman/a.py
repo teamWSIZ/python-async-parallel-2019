@@ -11,25 +11,28 @@ print(m.__len__())
 # właściwa deklaracja, z typem
 mm: Dict[int, str] = {}
 
+
 @dataclass
 class AA:
-    aa : int
+    aa: int
+
 
 @dataclass
 class Account:
-  account_no : int
-  secret : str
-  funds : int
+    account_no: int
+    secret: str
+    funds: int
+
 
 a = Account(1, 'aaa', 10)
 b = Account(2, '111', 10)
 
-print([a,b])
+print([a, b])
+
 
 class Lehman:
-  accounts: Dict[int, Account] = {}
+    accounts: Dict[int, Account] = {}
 
-  def create_account(self, secret: str):
-      next_id = self.accounts.__len__() + 1
-      self.accounts[next_id] = Account(next_id, secret, 10)
-
+    def create_account(self, secret: str):
+        next_id = self.accounts.__len__() + 1
+        self.accounts[next_id] = Account(next_id, secret, 10)
