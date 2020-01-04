@@ -1,3 +1,5 @@
+import threading
+
 from flask import Flask, jsonify, request
 
 from bank import Bank
@@ -19,6 +21,13 @@ def get_json_data():
 @app.route('/funds/get')
 def get_funds():
     return jsonify({'funds': bank.funds})
+
+
+@app.route('/accounts/<accountid>/details')
+def account(accountid):
+    print(accountid)
+    print(type(accountid))
+    return 'Hello %s!' % accountid
 
 
 @app.route('/funds/draw')

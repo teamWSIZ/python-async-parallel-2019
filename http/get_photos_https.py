@@ -1,6 +1,5 @@
 import requests
 
-
 class Photo:
     def __init__(self, albumId=0, id=0, title='', url='', thumbnailUrl=''):
         self.albumId = albumId

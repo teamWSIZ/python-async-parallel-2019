@@ -28,3 +28,5 @@ with open('data.json', 'r') as f:
     uu = U(**loaded)
 
 print(uu.lista)
+
+
