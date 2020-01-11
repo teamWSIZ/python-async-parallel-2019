@@ -31,13 +31,13 @@ def get_unique_set(a: List[int]) -> List[int]:
     return [e for e in uniq]
 
 # zbior 100tys losowych liczb
-a = [randint(0, 1000000) for _ in range(10)]
+a = [randint(0, 1000000) for _ in range(30000)]
 
 
-print(a)
+# print(a)
 start = time.time()
-# uu = get_unique_list(a)
-uu = get_unique_set(a)
+uu = get_unique_list(a)
+# uu = get_unique_set(a)
 end = time.time()
 
 print(f'czas:{end-start:.3f}s  elementow:{len(uu)}')
