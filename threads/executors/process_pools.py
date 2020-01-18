@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from time import sleep
 from typing import List
 import os
+import multiprocessing as mp
 
 
 def t():
@@ -13,6 +14,9 @@ def t():
 
 
 global_d = 112
+
+man = mp.Manager()
+mapa = man.dict()  # dict shared between processes
 
 
 @dataclass
