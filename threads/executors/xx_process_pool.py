@@ -6,17 +6,21 @@ import multiprocessing as mp
 
 
 # use watch -n1 'ps ax | grep python'
+# check more on: https://docs.python.org/3/library/multiprocessing.html#sharing-state-between-processes
+
 
 class Container:
     www = '.'
 
 
+# struktury share'owane mi
 cont = Container()
-
 qq = mp.Queue()
-
 man = mp.Manager()
-mapa = man.dict() #dict shared between processes
+mapa = man.dict()  # dict shared between processes
+# lista = man.list()
+# ll = man.Lock()
+
 
 def zadanie(arg: float):
     print(f'zaczynam: {arg} {cont.www} [{os.getpid()}]')
