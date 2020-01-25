@@ -15,8 +15,8 @@ def t():
 
 zmora = 0
 
-man = mp.Manager()
-mapa = man.dict()  # dict shared between processes
+# man = mp.Manager()
+# mapa = man.dict()  # dict shared between processes
 
 
 @dataclass
@@ -58,7 +58,7 @@ if __name__ == '__main__':
         future_results.append(future_result)
         print(f'submitted {i}')
 
-    sleep(0.1)  # jeśli dłuższy przestój => procesy wystartują => zmiana `common_scene` nie wpłynie na nie
+    sleep(0.0005)  # jeśli dłuższy przestój => procesy wystartują => zmiana `common_scene` nie wpłynie na nie
     common_scene[4] = 111
     zmora = 111  # nie wpłynie na zasubmitowane zadania    sleep(0.1)
     sleep(0.1)
