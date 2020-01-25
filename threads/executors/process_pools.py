@@ -13,7 +13,7 @@ def t():
     return threading.current_thread().name
 
 
-global_d = 0
+zmora = 0
 
 man = mp.Manager()
 mapa = man.dict()  # dict shared between processes
@@ -34,7 +34,8 @@ def render_scene(arg, scena: List[int], config: MyConfig):
     """
     print(
         f'start task [{arg}] scena:{scena, id(scena)}, '
-        f'wątek: {t()} proces:{os.getpid()}, g_d={global_d}, {id(global_d)}')
+        f'wątek: {t()} proces:{os.getpid()}, '
+        f'zmora={zmora}, {id(zmora)}')
     scena[0] = 100
     sleep(0.3)
     print(f'koniec task [{arg}]')
@@ -44,7 +45,7 @@ def render_scene(arg, scena: List[int], config: MyConfig):
 if __name__ == '__main__':
     TASK_COUNT = 4
 
-    print(f'start programu, adres global_d:{id(global_d)}')
+    print(f'start programu, adres global_d:{id(zmora)}')
 
     executor = ProcessPoolExecutor(10)  # 10 physical threads
     future_results: List[Future] = []
@@ -57,13 +58,13 @@ if __name__ == '__main__':
         future_results.append(future_result)
         print(f'submitted {i}')
 
-    sleep(0.00001)  # jeśli dłuższy przestój => procesy wystartują => zmiana `common_scene` nie wpłynie na nie
+    sleep(0.1)  # jeśli dłuższy przestój => procesy wystartują => zmiana `common_scene` nie wpłynie na nie
     common_scene[4] = 111
-    global_d = 111  # nie wpłynie na zasubmitowane zadania    sleep(0.1)
+    zmora = 111  # nie wpłynie na zasubmitowane zadania    sleep(0.1)
     sleep(0.1)
 
     executor.submit(render_scene, -1, common_scene, MyConfig(0, 0))
-    print(f'koniec programu, adres global_d:{id(global_d)}')
+    print(f'koniec programu, adres zmora:{id(zmora)}')
 
     suma = 0
     for f in future_results:
