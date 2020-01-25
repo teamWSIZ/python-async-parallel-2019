@@ -13,7 +13,7 @@ def t():
     return threading.current_thread().name
 
 
-global_d = 112
+global_d = 0
 
 man = mp.Manager()
 mapa = man.dict()  # dict shared between processes
@@ -26,19 +26,27 @@ class MyConfig:
 
 
 def render_scene(arg, scena: List[int], config: MyConfig):
-    print(f'start {arg, scena, id(scena)}, wątek: {t()} proces:{os.getpid()} -> {global_d}, {id(global_d)}')
+    """
+    Proces uruchamiany na wielu wątkach jednocześnie.
+    Przekaz danych:
+    - `arg` i `scena` są de-facto kopiowane dla każdego z wątków
+
+    """
+    print(
+        f'start task [{arg}] scena:{scena, id(scena)}, '
+        f'wątek: {t()} proces:{os.getpid()}, g_d={global_d}, {id(global_d)}')
     scena[0] = 100
     sleep(0.3)
-    print(f'end {arg}')
+    print(f'koniec task [{arg}]')
     return arg * arg
 
 
 if __name__ == '__main__':
-    TASK_COUNT = 30
+    TASK_COUNT = 4
 
     print(f'start programu, adres global_d:{id(global_d)}')
 
-    executor = ProcessPoolExecutor(10)  # single physical thread; async
+    executor = ProcessPoolExecutor(10)  # 10 physical threads
     future_results: List[Future] = []
     common_scene = [1, 1, 0, 0, 1]
 
@@ -49,12 +57,13 @@ if __name__ == '__main__':
         future_results.append(future_result)
         print(f'submitted {i}')
 
-    sleep(0.1)
-    global_d = 0  # nie wplynie na zasubmitowane zadania    sleep(0.1)
+    sleep(0.00001)  # jeśli dłuższy przestój => procesy wystartują => zmiana `common_scene` nie wpłynie na nie
+    common_scene[4] = 111
+    global_d = 111  # nie wpłynie na zasubmitowane zadania    sleep(0.1)
     sleep(0.1)
 
     executor.submit(render_scene, -1, common_scene, MyConfig(0, 0))
-    print(f'konice programu, adres global_d:{id(global_d)}')
+    print(f'koniec programu, adres global_d:{id(global_d)}')
 
     suma = 0
     for f in future_results:
