@@ -7,18 +7,25 @@ import multiprocessing as mp
 def render_scene(arg, scena: List[int], mapa: Dict):
     """
     """
-    print(f'start task [{arg}] scena:{scena, id(scena)}')
+    # print(f'start task [{arg}] scena:{scena, id(scena)}')
     sleep(0.3)
-    print(f'koniec task [{arg}], value={mapa["xxx"]}')
+    if arg % 100 == 0:
+        print(f'koniec task [{arg}], mapa[xxx]={mapa["xxx"]},  qu={shared_que.qsize()} '
+              f'val={shared_val.value}')
     mapa['xxx'] = arg
+    shared_que.put(arg, False)
+    shared_val.value += 1
     return arg * arg
 
 
-
 if __name__ == '__main__':
+    # tworzenie struktur danych współdzielonych między procesami
     man = mp.Manager()
-    mapa = man.dict()  # dict shared between processes
+    mapa = man.dict()  # (działa jak dict, ale wysyła informacje między procesami)
     mapa['xxx'] = -1
-    executor = ProcessPoolExecutor()
-    for i in range(5):
+    shared_que = mp.Queue(maxsize=1200)  # kolejka typu FIFO
+    shared_val = mp.Value('i', 0)  # pojedyncza wartość
+
+    executor = ProcessPoolExecutor(48)
+    for i in range(5000):
         executor.submit(render_scene, i, [], mapa)
