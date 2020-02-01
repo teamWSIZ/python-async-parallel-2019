@@ -9,7 +9,7 @@ def render_scene(arg, scena: List[int], mapa: Dict):
     """
     # print(f'start task [{arg}] scena:{scena, id(scena)}')
     sleep(0.3)
-    if arg % 100 == 0:
+    if arg % 1 == 0:
         print(f'koniec task [{arg}], mapa[xxx]={mapa["xxx"]},  qu={shared_que.qsize()} '
               f'val={shared_val.value}')
     mapa['xxx'] = arg
@@ -27,5 +27,6 @@ if __name__ == '__main__':
     shared_val = mp.Value('i', 0)  # pojedyncza wartość
 
     executor = ProcessPoolExecutor(48)
-    for i in range(5000):
+    for i in range(20):
         executor.submit(render_scene, i, [], mapa)
+    sleep(10)
