@@ -2,7 +2,7 @@
 import random
 
 import matplotlib
-import numpy as np
+import numpy as np  # conda install -c anaconda numpy
 import matplotlib.pyplot as plt
 
 # ----------- generowanie danych
