@@ -23,7 +23,7 @@ for i in range(100):
 
 fig, ax = plt.subplots(1, 1)
 ax.tricontourf(xx, yy, zz, 50, cmap=cm.hot, norm=plt.Normalize(vmin=10, vmax=100))  # , norm=LogNorm()
-ax.set(xlabel='given prefix length', ylabel='noncortex regions (learing_threshold=1)',
-       title='Full recall probability')
+ax.set(xlabel='opis x', ylabel='opis y',
+       title='Tytuł wykresu')
 fig.set_dpi(600)
 plt.show()
