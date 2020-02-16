@@ -5,7 +5,7 @@ import threading
 
 from flask import Flask, jsonify, request
 
-from bazy_tutorial.a import get_all_users, get_all_users_with_name_prefix
+from bazy_tutorial.a import get_all_users, get_all_users_with_name_prefix, FakeUser, as_dict
 
 app = Flask(__name__)
 
@@ -24,6 +24,14 @@ def get_users():
 def get_users_by_name_prefix(username):
     return jsonify(get_all_users_with_name_prefix(username))
 
+
+@app.route('/users/upsert', methods=['POST'])
+def upsert_user():
+    print(f'got:{request.json}')
+    data = request.json
+    k = FakeUser(**data)
+    k.save()
+    return jsonify(as_dict(k))
 
 # # dostępna pod: http://localhost:5001/compute?a=10&b=0
 # @app.route('/compute')
