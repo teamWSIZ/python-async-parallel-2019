@@ -1,6 +1,6 @@
 import threading
 from concurrent.futures.thread import ThreadPoolExecutor
-from time import sleep
+from time import sleep, time
 
 
 def t():
@@ -12,7 +12,7 @@ def foo(i):
     return i*i
 
 ex = ThreadPoolExecutor(16)
-f1 = ex.submit(foo, 5)
+f1 = ex.submit(foo, 1)
 f2 = ex.submit(foo, 5)
 print(t())
 sleep(0.000001)

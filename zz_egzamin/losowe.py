@@ -1,4 +1,4 @@
-from random import randint, random
+from random import randint, random, normalvariate
 
 def foo():
     w = 0
@@ -12,9 +12,14 @@ def foo():
 print(random())
 cnt = 0
 
-for i in range(100000):
-    if random() < 0.1:
-        cnt += 1
+# for i in range(1000):
+#     if random() < 0.1:
+#         cnt += 1
+
+for i in range(100):
+    u = normalvariate(0,1)
+    print(u)
+
 
 # ile średnio będzie wynosiła zmienna cnt po wykonaniu programu?
 # 1000
@@ -28,3 +33,7 @@ for i in range(100000):
 # 1000 ?
 
 
+w = 0
+for i in range(100):
+    w += randint(0, 10)
+print(w)
